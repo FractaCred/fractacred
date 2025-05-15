@@ -1,5 +1,5 @@
 :root {
-  --primary: #0049b7;
+  --primary: #002f75;
   --primary-dark: #0052cc;
   --primary-light: #e6f0ff;
   --secondary: #00c2ff;
@@ -59,7 +59,7 @@ body {
 
 .navbar.scrolled {
   padding: 10px 0;
-  background-color: rgba(0, 102, 255, 0.95);
+  background-color: #002f75;
   backdrop-filter: blur(10px);
 }
 

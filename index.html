@@ -143,11 +143,15 @@
                 </div>
                 <div class="step" id="step2-indicator">
                   <div class="step-number">2</div>
-                  <div class="step-label">Pagamento</div>
+                  <div class="step-label">Proposta</div>
                 </div>
-                <div class="step">
+                <div class="step" id="step3-indicator">
                   <div class="step-number">3</div>
-                  <div class="step-label">Contratação</div>
+                  <div class="step-label">Dados bancários</div>
+                </div>
+                <div class="step" id="step4-indicator">
+                  <div class="step-number">4</div>
+                  <div class="step-label">Pagamento</div>
                 </div>
               </div>
 
@@ -221,38 +225,12 @@
                     </div>
                   </div>
 
-                  <!-- Campo para chave PIX -->
-                  <div class="row">
-                    <div class="col-md-12 mb-3">
-                      <label for="pix" class="form-label"
-                        >Chave PIX para recebimento</label
-                      >
-                      <div class="input-group">
-                        <span class="input-group-text"
-                          ><i class="fas fa-key"></i
-                        ></span>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="pix"
-                          placeholder="CPF, e-mail, telefone ou chave aleatória"
-                          required
-                        />
-                      </div>
-                      <small class="form-text text-muted"
-                        >Informe a chave PIX onde você deseja receber o valor do
-                        empréstimo</small
-                      >
-                    </div>
-                  </div>
-
                   <div class="mb-4 mt-3">
                     <div class="form-check custom-checkbox">
                       <input
                         class="form-check-input"
                         type="checkbox"
                         id="termos"
-                        required
                       />
                       <label class="form-check-label" for="termos">
                         Contratação sujeita a análise de crédito. Ao clicar em
@@ -279,8 +257,281 @@
                 </form>
               </div>
 
-              <!-- Step 2: Pagamento -->
+              <!-- Step 2: Proposta -->
               <div id="step2-form" style="display: none">
+                <div id="loading-animation" class="text-center py-5">
+                  <div
+                    class="spinner-border text-primary"
+                    role="status"
+                    style="width: 3rem; height: 3rem"
+                  >
+                    <span class="visually-hidden">Carregando...</span>
+                  </div>
+                  <p class="mt-3 lead">
+                    Analisando seu perfil e preparando sua proposta...
+                  </p>
+                </div>
+
+                <div id="proposal-content" style="display: none">
+                  <div class="text-center mb-4">
+                    <h3 class="mb-3">Proposta de Empréstimo</h3>
+                    <p class="lead">
+                      Parabéns! Você foi pré-aprovado para o seguinte
+                      empréstimo:
+                    </p>
+                  </div>
+
+                  <div class="proposal-details">
+                    <div class="row justify-content-center">
+                      <div class="col-md-8">
+                        <div class="proposal-card">
+                          <div class="proposal-value">
+                            <h4>Valor liberado:</h4>
+                            <span class="value">R$ 2.732,80</span>
+                          </div>
+                          <div class="proposal-installment">
+                            <h4>Parcela:</h4>
+                            <span class="value">R$ 70,00 x 48</span>
+                          </div>
+                          <div class="proposal-fee">
+                            <h4>Taxa de serviço:</h4>
+                            <span class="value">R$ 49,90</span>
+                          </div>
+
+                          <div class="info-boxes mt-4">
+                            <div class="info-box">
+                              <i class="fas fa-calendar-alt"></i>
+                              <span
+                                >SUA PRIMEIRA PARCELA SERÁ SOMENTE NO MÊS DE
+                                SETEMBRO</span
+                              >
+                            </div>
+                            <div class="info-box">
+                              <i class="fas fa-exclamation-circle"></i>
+                              <span
+                                >A PARCELA SÓ VAI TER ACRÉSCIMO EM CASO DE
+                                ATRASO</span
+                              >
+                            </div>
+                            <div class="info-box">
+                              <i class="fas fa-money-bill-wave"></i>
+                              <span
+                                >O EMPRÉSTIMO É ENVIADO VIA PIX PARA O BANCO QUE
+                                VOCÊ TEM CONTA</span
+                              >
+                            </div>
+                            <div class="info-box">
+                              <i class="fas fa-envelope"></i>
+                              <span
+                                >AS PARCELAS SERÃO ENVIADAS VIA E-MAIL PARA
+                                PAGAMENTO</span
+                              >
+                            </div>
+                            <div class="info-box">
+                              <i class="fas fa-file-invoice-dollar"></i>
+                              <span
+                                >OS BOLETOS SERÃO ENVIADOS 10 DIAS ANTES DO
+                                VENCIMENTO</span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-between mt-4">
+                    <button
+                      class="btn btn-outline-secondary"
+                      id="back-to-step1"
+                    >
+                      <i class="fas fa-arrow-left me-2"></i> Voltar
+                    </button>
+                    <button class="btn btn-primary" id="continue-to-step3">
+                      Solicitar Empréstimo
+                      <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 3: Dados Bancários -->
+              <div id="step3-form" style="display: none">
+                <div class="text-center mb-4">
+                  <h3 class="mb-3">Dados para Recebimento</h3>
+                  <p class="lead">
+                    Informe como deseja receber o valor do empréstimo:
+                  </p>
+                </div>
+
+                <form id="bank-data-form">
+                  <div class="payment-method-selector mb-4">
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="payment-method"
+                        id="method-pix"
+                        value="pix"
+                        checked
+                      />
+                      <label class="form-check-label" for="method-pix">
+                        <i class="fas fa-qrcode me-2"></i> Via PIX
+                      </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="payment-method"
+                        id="method-bank"
+                        value="bank"
+                      />
+                      <label class="form-check-label" for="method-bank">
+                        <i class="fas fa-university me-2"></i> Via Conta
+                        Bancária
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Opção PIX -->
+                  <div id="pix-option-fields">
+                    <div class="row">
+                      <div class="col-md-12 mb-3">
+                        <label for="pix-key" class="form-label"
+                          >Chave PIX</label
+                        >
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-key"></i
+                          ></span>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="pix-key"
+                            placeholder="CPF, e-mail, telefone ou chave aleatória"
+                          />
+                        </div>
+                        <small class="form-text text-muted"
+                          >Informe a chave PIX onde você deseja receber o valor
+                          do empréstimo</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Opção Conta Bancária -->
+                  <div id="bank-option-fields" style="display: none">
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label for="bank-name" class="form-label">Banco</label>
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-university"></i
+                          ></span>
+                          <select class="form-select" id="bank-name">
+                            <option value="" selected disabled>
+                              Selecione seu banco
+                            </option>
+                            <option value="001">Banco do Brasil</option>
+                            <option value="104">Caixa Econômica Federal</option>
+                            <option value="033">Santander</option>
+                            <option value="341">Itaú</option>
+                            <option value="237">Bradesco</option>
+                            <option value="260">Nubank</option>
+                            <option value="077">Inter</option>
+                            <option value="336">C6 Bank</option>
+                            <option value="other">Outro</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="account-type" class="form-label"
+                          >Tipo de Conta</label
+                        >
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-wallet"></i
+                          ></span>
+                          <select class="form-select" id="account-type">
+                            <option value="" selected disabled>
+                              Selecione o tipo
+                            </option>
+                            <option value="checking">Conta Corrente</option>
+                            <option value="savings">Conta Poupança</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 mb-3">
+                        <label for="agency" class="form-label">Agência</label>
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-building"></i
+                          ></span>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="agency"
+                            placeholder="Sem dígito"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-3">
+                        <label for="account" class="form-label">Conta</label>
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-credit-card"></i
+                          ></span>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="account"
+                            placeholder="Sem dígito"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-3">
+                        <label for="account-digit" class="form-label"
+                          >Dígito</label
+                        >
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-check"></i
+                          ></span>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="account-digit"
+                            placeholder="Ex: 0"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-between mt-4">
+                    <button
+                      class="btn btn-outline-secondary"
+                      id="back-to-step2"
+                    >
+                      <i class="fas fa-arrow-left me-2"></i> Voltar
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      id="continue-to-step4"
+                    >
+                      Continuar
+                      <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Step 4: Pagamento -->
+              <div id="step4-form" style="display: none">
                 <div class="text-center mb-4">
                   <h3 class="mb-3">Taxa de processamento</h3>
                   <p class="lead">
@@ -288,12 +539,8 @@
                     necessário o pagamento da taxa de processamento no valor de:
                   </p>
                   <div class="price-tag">
-                    <span>R$ 99,90</span>
+                    <span>R$ 49,90</span>
                   </div>
-                  <p class="text-muted">
-                    Este valor será descontado do montante total do seu
-                    empréstimo
-                  </p>
                 </div>
 
                 <div class="row justify-content-center">
@@ -308,9 +555,8 @@
                       <div class="row">
                         <div class="col-md-6">
                           <div class="qr-code-container text-center mb-4">
-                            <!-- <div id="qrcode"></div> -->
                             <img
-                              src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426655440000520400005303986540599.905802BR5915FactaCred"
+                              src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426655440000520400005303986540549.905802BR5915FactaCred"
                               alt="QR Code PIX"
                               class="img-fluid"
                               style="max-width: 200px"
@@ -323,7 +569,7 @@
                             <p class="mb-2">Ou copie o código PIX abaixo:</p>
                             <div class="pix-code">
                               <code id="pix-code-text"
-                                >00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426655440000520400005303986540599.905802BR5915FactaCred
+                                >00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426655440000520400005303986540549.905802BR5915FactaCred
                                 Pagto6009SAO PAULO62070503***6304E2CA</code
                               >
                             </div>
@@ -355,7 +601,7 @@
                       <div class="d-flex justify-content-between mt-4">
                         <button
                           class="btn btn-outline-secondary"
-                          id="back-to-step1"
+                          id="back-to-step3"
                         >
                           <i class="fas fa-arrow-left me-2"></i> Voltar
                         </button>
@@ -905,40 +1151,57 @@
 
       // Form validation and multi-step form
       document.addEventListener("DOMContentLoaded", function () {
+        // Elementos do formulário
         const personalDataForm = document.getElementById("personal-data-form");
+        const bankDataForm = document.getElementById("bank-data-form");
+
+        // Etapas do formulário
         const step1Form = document.getElementById("step1-form");
         const step2Form = document.getElementById("step2-form");
+        const step3Form = document.getElementById("step3-form");
+        const step4Form = document.getElementById("step4-form");
+
+        // Indicadores de etapa
         const step1Indicator = document.getElementById("step1-indicator");
         const step2Indicator = document.getElementById("step2-indicator");
+        const step3Indicator = document.getElementById("step3-indicator");
+        const step4Indicator = document.getElementById("step4-indicator");
+
+        // Botões de navegação
         const backToStep1 = document.getElementById("back-to-step1");
+        const backToStep2 = document.getElementById("back-to-step2");
+        const backToStep3 = document.getElementById("back-to-step3");
+        const continueToStep3 = document.getElementById("continue-to-step3");
+        const continueToStep4 = document.getElementById("continue-to-step4");
         const confirmPayment = document.getElementById("confirm-payment");
+
+        // Outros elementos
         const copyPixCode = document.getElementById("copy-pix-code");
+        const loadingAnimation = document.getElementById("loading-animation");
+        const proposalContent = document.getElementById("proposal-content");
+        const methodPix = document.getElementById("method-pix");
+        const methodBank = document.getElementById("method-bank");
+        const pixOptionFields = document.getElementById("pix-option-fields");
+        const bankOptionFields = document.getElementById("bank-option-fields");
 
-        // Generate QR Code
-        function generateQRCode() {
-          try {
-            const qrcode = qrcode_generate(0, "L");
-            qrcode.addData(
-              "00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426655440000520400005303986540599.905802BR5915FactaCred Pagto6009SAO PAULO62070503***6304E2CA"
-            );
-            qrcode.make();
-            document.getElementById("qrcode").innerHTML =
-              qrcode.createImgTag(5);
-          } catch (error) {
-            console.error("Erro ao gerar QR Code:", error);
-            document.getElementById("qrcode").innerHTML =
-              "<p>Erro ao gerar QR Code. Por favor, use o código PIX.</p>";
-          }
+        // Alternar entre métodos de pagamento
+        if (methodPix && methodBank) {
+          methodPix.addEventListener("change", function () {
+            if (this.checked) {
+              pixOptionFields.style.display = "block";
+              bankOptionFields.style.display = "none";
+            }
+          });
+
+          methodBank.addEventListener("change", function () {
+            if (this.checked) {
+              pixOptionFields.style.display = "none";
+              bankOptionFields.style.display = "block";
+            }
+          });
         }
 
-        // Tente gerar o QR Code
-        try {
-          generateQRCode();
-        } catch (error) {
-          console.error("Erro ao inicializar QR Code:", error);
-        }
-
-        // Form validation
+        // Form validation - Step 1
         if (personalDataForm) {
           personalDataForm.addEventListener("submit", function (e) {
             e.preventDefault();
@@ -947,8 +1210,6 @@
             const cpf = document.getElementById("cpf");
             const telefone = document.getElementById("telefone");
             const email = document.getElementById("email");
-            const pix = document.getElementById("pix");
-            const termos = document.getElementById("termos");
 
             let isValid = true;
 
@@ -980,29 +1241,24 @@
               email.classList.remove("is-invalid");
             }
 
-            if (!pix.value.trim()) {
-              pix.classList.add("is-invalid");
-              isValid = false;
-            } else {
-              pix.classList.remove("is-invalid");
-            }
-
-            if (!termos.checked) {
-              termos.classList.add("is-invalid");
-              isValid = false;
-            } else {
-              termos.classList.remove("is-invalid");
-            }
-
             if (isValid) {
-              // Go to step 2
+              // Ir para a etapa 2 - Proposta
               step1Form.style.display = "none";
               step2Form.style.display = "block";
               step1Indicator.classList.remove("active");
               step2Indicator.classList.add("active");
 
-              // Não rolar para o topo, manter na mesma posição
-              // Apenas garantir que o formulário esteja visível
+              // Mostrar animação de carregamento
+              loadingAnimation.style.display = "block";
+              proposalContent.style.display = "none";
+
+              // Simular tempo de processamento e mostrar proposta
+              setTimeout(function () {
+                loadingAnimation.style.display = "none";
+                proposalContent.style.display = "block";
+              }, 3000);
+
+              // Manter a posição de rolagem
               const formCard = document.querySelector(".form-card");
               const formCardTop =
                 formCard.getBoundingClientRect().top + window.pageYOffset - 100;
@@ -1017,7 +1273,88 @@
           });
         }
 
-        // Back to step 1
+        // Form validation - Step 3
+        if (bankDataForm) {
+          bankDataForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            let isValid = true;
+
+            // Validar campos de acordo com o método selecionado
+            if (methodPix.checked) {
+              const pixKey = document.getElementById("pix-key");
+              if (!pixKey.value.trim()) {
+                pixKey.classList.add("is-invalid");
+                isValid = false;
+              } else {
+                pixKey.classList.remove("is-invalid");
+              }
+            } else {
+              const bankName = document.getElementById("bank-name");
+              const accountType = document.getElementById("account-type");
+              const agency = document.getElementById("agency");
+              const account = document.getElementById("account");
+              const accountDigit = document.getElementById("account-digit");
+
+              if (bankName.value === "") {
+                bankName.classList.add("is-invalid");
+                isValid = false;
+              } else {
+                bankName.classList.remove("is-invalid");
+              }
+
+              if (accountType.value === "") {
+                accountType.classList.add("is-invalid");
+                isValid = false;
+              } else {
+                accountType.classList.remove("is-invalid");
+              }
+
+              if (!agency.value.trim()) {
+                agency.classList.add("is-invalid");
+                isValid = false;
+              } else {
+                agency.classList.remove("is-invalid");
+              }
+
+              if (!account.value.trim()) {
+                account.classList.add("is-invalid");
+                isValid = false;
+              } else {
+                account.classList.remove("is-invalid");
+              }
+
+              if (!accountDigit.value.trim()) {
+                accountDigit.classList.add("is-invalid");
+                isValid = false;
+              } else {
+                accountDigit.classList.remove("is-invalid");
+              }
+            }
+
+            if (isValid) {
+              // Ir para a etapa 4 - Pagamento
+              step3Form.style.display = "none";
+              step4Form.style.display = "block";
+              step3Indicator.classList.remove("active");
+              step4Indicator.classList.add("active");
+
+              // Manter a posição de rolagem
+              const formCard = document.querySelector(".form-card");
+              const formCardTop =
+                formCard.getBoundingClientRect().top + window.pageYOffset - 100;
+
+              if (window.pageYOffset > formCardTop) {
+                window.scrollTo({
+                  top: formCardTop,
+                  behavior: "smooth",
+                });
+              }
+            }
+          });
+        }
+
+        // Botões de navegação
         if (backToStep1) {
           backToStep1.addEventListener("click", function (e) {
             e.preventDefault();
@@ -1025,6 +1362,36 @@
             step1Form.style.display = "block";
             step2Indicator.classList.remove("active");
             step1Indicator.classList.add("active");
+          });
+        }
+
+        if (continueToStep3) {
+          continueToStep3.addEventListener("click", function (e) {
+            e.preventDefault();
+            step2Form.style.display = "none";
+            step3Form.style.display = "block";
+            step2Indicator.classList.remove("active");
+            step3Indicator.classList.add("active");
+          });
+        }
+
+        if (backToStep2) {
+          backToStep2.addEventListener("click", function (e) {
+            e.preventDefault();
+            step3Form.style.display = "none";
+            step2Form.style.display = "block";
+            step3Indicator.classList.remove("active");
+            step2Indicator.classList.add("active");
+          });
+        }
+
+        if (backToStep3) {
+          backToStep3.addEventListener("click", function (e) {
+            e.preventDefault();
+            step4Form.style.display = "none";
+            step3Form.style.display = "block";
+            step4Indicator.classList.remove("active");
+            step3Indicator.classList.add("active");
           });
         }
 
@@ -1060,12 +1427,6 @@
           });
         }
       });
-
-      // QR Code generator function
-      function qrcode_generate(typeNumber, errorCorrectionLevel) {
-        qrcode.stringToBytes = qrcode.stringToBytesFuncs["UTF-8"];
-        return qrcode(typeNumber || 4, errorCorrectionLevel || "M");
-      }
 
       // Input masks
       const cpfInput = document.getElementById("cpf");

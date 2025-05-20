@@ -657,33 +657,32 @@
 
                 <div class="row justify-content-center">
                   <div class="col-md-8">
-                    <div class="payment-options">
-                      <div class="payment-option active" id="pix-option">
-                        <i class="fas fa-qrcode"></i> Pagar com PIX
-                      </div>
-                    </div>
+                    <div class="payment-options"></div>
 
                     <div class="pix-payment-container">
                       <div class="row">
+                        <!-- Coluna 1: QR Code -->
                         <div class="col-md-6">
-                          <div class="qr-code-container text-center mb-4">
+                          <div class="pix-code-container text-center">
+                            <p class="mb-2">Escaneie o QR Code abaixo:</p>
                             <img
-                              src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426655440000520400005303986540549.905802BR5915FactaCred"
+                              src="qrcode.jpeg"
                               alt="QR Code PIX"
                               class="img-fluid"
-                              style="max-width: 200px"
+                              style="max-width: 250px"
                             />
-                            <p class="mt-2">Escaneie o QR Code</p>
                           </div>
                         </div>
+
+                        <!-- Coluna 2: Código PIX -->
                         <div class="col-md-6">
                           <div class="pix-code-container">
                             <p class="mb-2">Ou copie o código PIX abaixo:</p>
                             <div class="pix-code">
-                              <code id="pix-code-text"
-                                >00020126580014BR.GOV.BCB.PIX0136123e4567-e89b-12d3-a456-426655440000520400005303986540549.905802BR5915FactaCred
-                                Pagto6009SAO PAULO62070503***6304E2CA</code
-                              >
+                              <code id="pix-code-text">
+                                00020126580014BR.GOV.BCB.PIX0136283dc6a5-956b-41ad-9ccd-a4f9d044ffde520400005303986540549.905802BR5915FactaCred
+                                Pagto6009SAO PAULO62070503***6304E2CA
+                              </code>
                             </div>
                             <button
                               class="btn btn-sm btn-outline-primary mt-2"

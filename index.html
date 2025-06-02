@@ -114,6 +114,94 @@
         background-color: #1fba58;
         color: white;
       }
+
+      /* Estilos para o slideshow de informações */
+      .info-slideshow {
+        margin-top: 30px;
+        padding: 20px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        border: 2px solid #dee2e6;
+        min-height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .info-slide {
+        display: none;
+        text-align: center;
+        animation: slideIn 0.5s ease-in-out;
+      }
+
+      .info-slide.active {
+        display: block;
+      }
+
+      .info-slide .icon {
+        font-size: 2.5rem;
+        color: #007bff;
+        margin-bottom: 15px;
+      }
+
+      .info-slide h4 {
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+      }
+
+      .info-slide p {
+        color: #666;
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.4;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .progress-container {
+        margin-top: 20px;
+      }
+
+      .progress-bar-custom {
+        height: 8px;
+        background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+        border-radius: 4px;
+        transition: width 0.1s linear;
+      }
+
+      .time-remaining {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      .loading-header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .loading-header h3 {
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      .loading-header p {
+        color: #666;
+        margin: 0;
+      }
     </style>
   </head>
   <body>
@@ -351,16 +439,175 @@
               <!-- Step 2: Proposta -->
               <div id="step2-form" style="display: none">
                 <div id="loading-animation" class="text-center py-5">
-                  <div
-                    class="spinner-border text-primary"
-                    role="status"
-                    style="width: 3rem; height: 3rem"
-                  >
-                    <span class="visually-hidden">Carregando...</span>
+                  <div class="loading-header">
+                    <div
+                      class="spinner-border text-primary"
+                      role="status"
+                      style="width: 3rem; height: 3rem"
+                    >
+                      <span class="visually-hidden">Carregando...</span>
+                    </div>
+                    <h3 class="mt-3">Analisando seu perfil</h3>
+                    <p class="lead">
+                      Estamos preparando a melhor proposta para você...
+                    </p>
                   </div>
-                  <p class="mt-3 lead">
-                    Analisando seu perfil e preparando sua proposta...
-                  </p>
+
+                  <!-- Slideshow de informações -->
+                  <div class="info-slideshow">
+                    <div class="info-slide active">
+                      <div class="icon">
+                        <i class="fas fa-calendar-alt"></i>
+                      </div>
+                      <h4>Primeira Parcela</h4>
+                      <p>
+                        Sua primeira parcela será somente no mês de setembro
+                      </p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                      </div>
+                      <h4>Sem Acréscimos</h4>
+                      <p>
+                        A parcela só terá acréscimo em caso de atraso no
+                        pagamento
+                      </p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                      </div>
+                      <h4>Transferência PIX</h4>
+                      <p>
+                        O empréstimo é enviado via PIX para o banco que você tem
+                        conta
+                      </p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-envelope"></i>
+                      </div>
+                      <h4>Parcelas por E-mail</h4>
+                      <p>
+                        As parcelas serão enviadas via e-mail para pagamento
+                      </p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                      </div>
+                      <h4>Boletos Antecipados</h4>
+                      <p>
+                        Os boletos serão enviados 10 dias antes do vencimento
+                      </p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-shield-alt"></i>
+                      </div>
+                      <h4>Segurança Garantida</h4>
+                      <p>
+                        Seus dados estão protegidos com criptografia de ponta
+                      </p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-clock"></i>
+                      </div>
+                      <h4>Aprovação Rápida</h4>
+                      <p>Processo de aprovação em até 24 horas úteis</p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-percentage"></i>
+                      </div>
+                      <h4>Melhores Taxas</h4>
+                      <p>Oferecemos as menores taxas de juros do mercado</p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-headset"></i>
+                      </div>
+                      <h4>Suporte 24/7</h4>
+                      <p>Atendimento disponível todos os dias da semana</p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-mobile-alt"></i>
+                      </div>
+                      <h4>100% Digital</h4>
+                      <p>Todo o processo pode ser feito pelo seu celular</p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-check-circle"></i>
+                      </div>
+                      <h4>Sem Burocracia</h4>
+                      <p>Documentação mínima e processo simplificado</p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-star"></i>
+                      </div>
+                      <h4>Clientes Satisfeitos</h4>
+                      <p>Mais de 95% de aprovação dos nossos clientes</p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-handshake"></i>
+                      </div>
+                      <h4>Transparência Total</h4>
+                      <p>Todas as condições são apresentadas de forma clara</p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-coins"></i>
+                      </div>
+                      <h4>Sem Taxas Ocultas</h4>
+                      <p>Você paga apenas o que foi acordado, sem surpresas</p>
+                    </div>
+
+                    <div class="info-slide">
+                      <div class="icon">
+                        <i class="fas fa-chart-line"></i>
+                      </div>
+                      <h4>Análise Inteligente</h4>
+                      <p>
+                        Usamos IA para encontrar a melhor proposta para você
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Barra de progresso -->
+                  <div class="progress-container">
+                    <div
+                      class="progress"
+                      style="height: 8px; background-color: #e9ecef"
+                    >
+                      <div
+                        class="progress-bar-custom"
+                        id="progress-bar"
+                        style="width: 0%"
+                      ></div>
+                    </div>
+                    <div class="time-remaining">
+                      <span id="time-remaining">Tempo restante: 10:00</span>
+                    </div>
+                  </div>
                 </div>
 
                 <div id="proposal-content" style="display: none">
@@ -1238,8 +1485,6 @@
       </div>
     </div>
 
-    <!-- Restante do código HTML permanece igual... -->
-
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- AOS Animation Library -->
@@ -1277,6 +1522,68 @@
             // For this demo, we're just changing the active dot
           });
         });
+      }
+
+      // Slideshow functionality
+      let currentSlide = 0;
+      let slideInterval;
+      let progressInterval;
+      let timeRemaining = 30; // 10 minutes in seconds
+      let totalTime = 30;
+
+      function initializeSlideshow() {
+        const slides = document.querySelectorAll(".info-slide");
+        const progressBar = document.getElementById("progress-bar");
+        const timeRemainingElement = document.getElementById("time-remaining");
+
+        if (slides.length === 0) return;
+
+        // Show first slide
+        slides[0].classList.add("active");
+
+        // Start slideshow
+        slideInterval = setInterval(() => {
+          // Hide current slide
+          slides[currentSlide].classList.remove("active");
+
+          // Move to next slide
+          currentSlide = (currentSlide + 1) % slides.length;
+
+          // Show next slide
+          slides[currentSlide].classList.add("active");
+        }, 10000); // Change slide every 10 seconds
+
+        // Update progress bar and timer
+        progressInterval = setInterval(() => {
+          timeRemaining--;
+
+          // Update progress bar
+          const progressPercentage =
+            ((totalTime - timeRemaining) / totalTime) * 100;
+          progressBar.style.width = progressPercentage + "%";
+
+          // Update time remaining display
+          const minutes = Math.floor(timeRemaining / 60);
+          const seconds = timeRemaining % 60;
+          timeRemainingElement.textContent = `Tempo restante: ${minutes}:${seconds
+            .toString()
+            .padStart(2, "0")}`;
+
+          // Check if time is up
+          if (timeRemaining <= 0) {
+            clearInterval(slideInterval);
+            clearInterval(progressInterval);
+            showProposal();
+          }
+        }, 1000); // Update every second
+      }
+
+      function showProposal() {
+        const loadingAnimation = document.getElementById("loading-animation");
+        const proposalContent = document.getElementById("proposal-content");
+
+        loadingAnimation.style.display = "none";
+        proposalContent.style.display = "block";
       }
 
       // Form validation and multi-step form
@@ -1359,7 +1666,7 @@
           }
 
           // Montar a mensagem para o WhatsApp
-          const mensagem = `*Nova solicitação de empréstimo*\n\n*Dados Pessoais:*\nNome: ${nome}\nCPF: ${cpf}\nTelefone: ${telefone}\nE-mail: ${email}\n\n*Dados Bancários:*\n${dadosBancarios}\n\n*Proposta:*\nValor liberado: R$ 2.732,80\nParcela: R$ 70,00 x 48\nTaxa de serviço: R$ 49,90\n\n*Pagamento da taxa de processamento realizado.*`;
+          const mensagem = `*Nova solicitação de empréstimo*\n\n*Dados Pessoais:*\nNome: ${nome}\nCPF: ${cpf}\nTelefone: ${telefone}\nE-mail: ${email}\n\n*Dados Bancários:*\n${dadosBancarios}\n\n*Proposta:*\nValor liberado: R$ 2.732,80\nParcela: R$ 70,00 x 48\nTaxa de Contrato: R$ 49,90\n\n*Pagamento da taxa de processamento realizado.*`;
 
           // Codificar a mensagem para URL
           return encodeURIComponent(mensagem);
@@ -1440,15 +1747,8 @@
               step1Indicator.classList.remove("active");
               step2Indicator.classList.add("active");
 
-              // Mostrar animação de carregamento
-              loadingAnimation.style.display = "block";
-              proposalContent.style.display = "none";
-
-              // Simular tempo de processamento e mostrar proposta
-              setTimeout(function () {
-                loadingAnimation.style.display = "none";
-                proposalContent.style.display = "block";
-              }, 3000);
+              // Inicializar o slideshow
+              initializeSlideshow();
 
               // Manter a posição de rolagem
               const formCard = document.querySelector(".form-card");
@@ -1559,6 +1859,11 @@
         if (backToStep1) {
           backToStep1.addEventListener("click", function (e) {
             e.preventDefault();
+
+            // Clear intervals when going back
+            if (slideInterval) clearInterval(slideInterval);
+            if (progressInterval) clearInterval(progressInterval);
+
             step2Form.style.display = "none";
             step1Form.style.display = "block";
             step2Indicator.classList.remove("active");
@@ -1569,6 +1874,11 @@
         if (continueToStep3) {
           continueToStep3.addEventListener("click", function (e) {
             e.preventDefault();
+
+            // Clear intervals when continuing
+            if (slideInterval) clearInterval(slideInterval);
+            if (progressInterval) clearInterval(progressInterval);
+
             step2Form.style.display = "none";
             step3Form.style.display = "block";
             step2Indicator.classList.remove("active");
@@ -1583,6 +1893,10 @@
             step2Form.style.display = "block";
             step3Indicator.classList.remove("active");
             step2Indicator.classList.add("active");
+
+            // Show proposal directly when going back to step 2
+            loadingAnimation.style.display = "none";
+            proposalContent.style.display = "block";
           });
         }
 

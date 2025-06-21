@@ -122,7 +122,7 @@
         background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         border-radius: 15px;
         border: 2px solid #dee2e6;
-        min-height: 120px;
+        min-height: 200px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -132,30 +132,40 @@
         display: none;
         text-align: center;
         animation: slideIn 0.5s ease-in-out;
+        width: 100%;
       }
 
       .info-slide.active {
         display: block;
       }
 
-      .info-slide .icon {
-        font-size: 2.5rem;
-        color: #007bff;
-        margin-bottom: 15px;
+      .info-slide img {
+        max-width: 100%;
+        max-height: 300px;
+        height: auto;
+        border-radius: 10px;
+        object-fit: contain;
       }
 
-      .info-slide h4 {
+      .info-slide .text-content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .info-slide .text-content h4 {
         color: #333;
         font-weight: 600;
-        margin-bottom: 10px;
-        font-size: 1.2rem;
+        margin-bottom: 15px;
+        font-size: 1.3rem;
       }
 
-      .info-slide p {
+      .info-slide .text-content p {
         color: #666;
         margin: 0;
         font-size: 1rem;
-        line-height: 1.4;
+        line-height: 1.5;
+        text-align: justify;
       }
 
       @keyframes slideIn {
@@ -455,140 +465,34 @@
 
                   <!-- Slideshow de informações -->
                   <div class="info-slideshow">
+                    <!-- Imagem 1 -->
                     <div class="info-slide active">
-                      <div class="icon">
-                        <i class="fas fa-calendar-alt"></i>
-                      </div>
-                      <h4>Primeira Parcela</h4>
-                      <p>
-                        Sua primeira parcela será somente no mês de setembro
-                      </p>
+                      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/imagem1.jpg-KIFZGU270hkAqtk3Mbd0XBgDyoOeTz.jpeg" alt="Sempre tem um parceiro perto de você" />
                     </div>
 
+                    <!-- Imagem 2 -->
                     <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-exclamation-circle"></i>
-                      </div>
-                      <h4>Sem Acréscimos</h4>
-                      <p>
-                        A parcela só terá acréscimo em caso de atraso no
-                        pagamento
-                      </p>
+                      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/imagem2.jpg-auo8R19pCnLwawDQEpOKNfJAjA8mat.jpeg" alt="O final feliz que você tanto quer" />
                     </div>
 
+                    <!-- Texto sobre a Facta -->
                     <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-money-bill-wave"></i>
+                      <div class="text-content">
+                        <h4>Garantia Facta</h4>
+                        <p>
+                          A Facta busca oportunidade de crédito disponíveis para o seu CPF independente de restrição ou condição financeira. Nessa operação, caso seja reprovado por detalhe inconclusivo, entraremos como garantia e assim disponibilizar o empréstimo para você. Simples, rápido e fácil.
+                        </p>
                       </div>
-                      <h4>Transferência PIX</h4>
-                      <p>
-                        O empréstimo é enviado via PIX para o banco que você tem
-                        conta
-                      </p>
                     </div>
 
+                    <!-- Texto sobre bancos parceiros -->
                     <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-envelope"></i>
+                      <div class="text-content">
+                        <h4>Bancos Parceiros</h4>
+                        <p>
+                          <strong>Bancos parceiros:</strong> Banco do Brasil, Caixa Econômica Federal, Santander, Bradesco, Nubank, BMG, Banco Daycoval, Banco C6, Banco Itaú, Banco Inter, Banco BRB
+                        </p>
                       </div>
-                      <h4>Parcelas por E-mail</h4>
-                      <p>
-                        As parcelas serão enviadas via e-mail para pagamento
-                      </p>
-                    </div>
-
-                    <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-file-invoice-dollar"></i>
-                      </div>
-                      <h4>Boletos Antecipados</h4>
-                      <p>
-                        Os boletos serão enviados 10 dias antes do vencimento
-                      </p>
-                    </div>
-
-                    <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-shield-alt"></i>
-                      </div>
-                      <h4>Segurança Garantida</h4>
-                      <p>
-                        Seus dados estão protegidos com criptografia de ponta
-                      </p>
-                    </div>
-
-                    <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-clock"></i>
-                      </div>
-                      <h4>Aprovação Rápida</h4>
-                      <p>Processo de aprovação em até 24 horas úteis</p>
-                    </div>
-
-                    <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-percentage"></i>
-                      </div>
-                      <h4>Melhores Taxas</h4>
-                      <p>Oferecemos as menores taxas de juros do mercado</p>
-                    </div>
-
-                    <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-headset"></i>
-                      </div>
-                      <h4>Suporte 24/7</h4>
-                      <p>Atendimento disponível todos os dias da semana</p>
-                    </div>
-
-                    <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-mobile-alt"></i>
-                      </div>
-                      <h4>100% Digital</h4>
-                      <p>Todo o processo pode ser feito pelo seu celular</p>
-                    </div>
-
-                    <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-check-circle"></i>
-                      </div>
-                      <h4>Sem Burocracia</h4>
-                      <p>Documentação mínima e processo simplificado</p>
-                    </div>
-
-                    <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-star"></i>
-                      </div>
-                      <h4>Clientes Satisfeitos</h4>
-                      <p>Mais de 95% de aprovação dos nossos clientes</p>
-                    </div>
-
-                    <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-handshake"></i>
-                      </div>
-                      <h4>Transparência Total</h4>
-                      <p>Todas as condições são apresentadas de forma clara</p>
-                    </div>
-
-                    <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-coins"></i>
-                      </div>
-                      <h4>Sem Taxas Ocultas</h4>
-                      <p>Você paga apenas o que foi acordado, sem surpresas</p>
-                    </div>
-
-                    <div class="info-slide">
-                      <div class="icon">
-                        <i class="fas fa-chart-line"></i>
-                      </div>
-                      <h4>Análise Inteligente</h4>
-                      <p>
-                        Usamos IA para encontrar a melhor proposta para você
-                      </p>
                     </div>
                   </div>
 
@@ -1528,8 +1432,8 @@
       let currentSlide = 0;
       let slideInterval;
       let progressInterval;
-      let timeRemaining = 30; // 10 minutes in seconds
-      let totalTime = 30;
+      let timeRemaining = 600; // 10 minutes in seconds
+      let totalTime = 600;
 
       function initializeSlideshow() {
         const slides = document.querySelectorAll(".info-slide");
